@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,4 +24,4 @@ jobs:
 
       # TODO: lint などを導入する
       - name: Run build
-        run: bun build main.ts
+        run: bun build main.ts >> /dev/null
