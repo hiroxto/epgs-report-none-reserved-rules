@@ -80,24 +80,31 @@ const buildMessageText = (rules: Rule[]) => {
     return `\`${REPORT_TITLE}\`\n${rulesText}`;
 };
 
-// ルールを全件取得する
-const rules = await fetchAllRules();
-// 有効なルールかつ，予約が 0 件のルールを抽出する
-const noneReservedRules = rules.filter(rule => rule.enable && rule.reservesCount === 0);
+try {
+    // ルールを全件取得する
+    console.info(`予約ルール取得開始`);
+    const rules = await fetchAllRules();
+    console.info(`予約ルール取得完了`);
 
-// 全てのルールに予約がある場合は終了する
-if (noneReservedRules.length === 0) {
-    console.info('全ての録画ルールに予約があります。');
-    process.exit(0);
+    // 有効なルールかつ，予約が 0 件のルールを抽出する
+    const noneReservedRules = rules.filter(rule => rule.enable && rule.reservesCount === 0);
+
+    // 全てのルールに予約がある場合は終了する
+    if (noneReservedRules.length === 0) {
+        console.info('全ての録画ルールに予約があります。');
+        process.exit(0);
+    }
+
+    // 予約が 0 件のルールがある場合は Slack に通知する
+    console.info(`予約のないルール件数: ${noneReservedRules.length}件`);
+    const slackClient = new WebClient(SLACK_TOKEN);
+    await slackClient.chat.postMessage({
+        text: buildMessageText(noneReservedRules),
+        channel: SLACK_CHANNEL_ID,
+        username : SLACK_BOT_NAME,
+    });
+    console.info(`Slackへ投稿完了`);
+
+} catch (error) {
+    console.error(error);
 }
-
-// 予約が 0 件のルールがある場合は Slack に通知する
-console.info(`予約のないルール件数: ${noneReservedRules.length}件`);
-const slackClient = new WebClient(SLACK_TOKEN);
-const response = await slackClient.chat.postMessage({
-    text: buildMessageText(noneReservedRules),
-    channel: SLACK_CHANNEL_ID,
-    username : SLACK_BOT_NAME,
-});
-console.log(response);
-console.info(`Slackへ投稿完了`);
