@@ -94,10 +94,9 @@ if (noneReservedRules.length === 0) {
 // 予約が 0 件のルールがある場合は Slack に通知する
 console.info(`予約のないルール件数: ${noneReservedRules.length}件`);
 const slackClient = new WebClient(SLACK_TOKEN);
-const response = await slackClient.chat.postMessage({
+await slackClient.chat.postMessage({
     text: buildMessageText(noneReservedRules),
     channel: SLACK_CHANNEL_ID,
     username : SLACK_BOT_NAME,
 });
-console.log(response);
 console.info(`Slackへ投稿完了`);
