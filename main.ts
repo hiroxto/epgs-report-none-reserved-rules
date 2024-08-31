@@ -82,7 +82,10 @@ const buildMessageText = (rules: Rule[]) => {
 
 try {
     // ルールを全件取得する
+    console.info(`予約ルール取得開始`);
     const rules = await fetchAllRules();
+    console.info(`予約ルール取得完了`);
+
     // 有効なルールかつ，予約が 0 件のルールを抽出する
     const noneReservedRules = rules.filter(rule => rule.enable && rule.reservesCount === 0);
 
