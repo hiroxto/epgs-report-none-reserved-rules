@@ -22,6 +22,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
 
-      # TODO: lint などを導入する
       - name: Run build
         run: bun build main.ts >> /dev/null
+
+      - name: Run biome lint
+        run: bunx biome lint
+
+      - name: Run biome format
+        run: bunx biome format
