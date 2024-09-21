@@ -38,13 +38,15 @@ const SLACK_TOKEN = Bun.env.SLACK_TOKEN;
 const SLACK_CHANNEL_ID = Bun.env.SLACK_CHANNEL_ID;
 const SLACK_BOT_NAME = Bun.env.SLACK_BOT_NAME;
 const REPORT_TITLE = Bun.env.REPORT_TITLE;
+const DEFAULT_EMPTY_VALUE = Bun.env.DEFAULT_EMPTY_VALUE;
 // undefined の場合はエラーにする
 assert(
     typeof BASE_URL === 'string' &&
     typeof SLACK_TOKEN === 'string' &&
     typeof SLACK_CHANNEL_ID === 'string' &&
     typeof SLACK_BOT_NAME === 'string' &&
-    typeof REPORT_TITLE === 'string'
+    typeof REPORT_TITLE === 'string' &&
+    typeof DEFAULT_EMPTY_VALUE === 'string'
 );
 /**
  * 予約ルールを全件取得する
@@ -66,8 +68,8 @@ const fetchAllRules = async () => {
         id: rawRule.id,
         reservesCount: rawRule.reservesCnt,
         enable: rawRule.reserveOption.enable,
-        keyword: rawRule.searchOption.keyword ?? '(なし)',
-        ignoreKeyword: rawRule.searchOption.ignoreKeyword ?? '(なし)',
+        keyword: rawRule.searchOption.keyword ?? DEFAULT_EMPTY_VALUE,
+        ignoreKeyword: rawRule.searchOption.ignoreKeyword ?? DEFAULT_EMPTY_VALUE,
     }));
 };
 
@@ -77,14 +79,12 @@ const fetchAllRules = async () => {
 const buildMessageText = (rules: Rule[]) => {
     const rulesText = rules.map(rule => `ルールID:${rule.id}, キーワード:${rule.keyword}, 除外キーワード:${rule.ignoreKeyword}`).join('\n');
 
-    return `\`${REPORT_TITLE}\`\n${rulesText}`;
+    return `${REPORT_TITLE}\n\n${rulesText}`;
 };
 
 try {
     // ルールを全件取得する
-    console.info(`予約ルール取得開始`);
     const rules = await fetchAllRules();
-    console.info(`予約ルール取得完了`);
 
     // 有効なルールかつ，予約が 0 件のルールを抽出する
     const noneReservedRules = rules.filter(rule => rule.enable && rule.reservesCount === 0);
@@ -103,7 +103,6 @@ try {
         channel: SLACK_CHANNEL_ID,
         username : SLACK_BOT_NAME,
     });
-    console.info(`Slackへ投稿完了`);
 
 } catch (error) {
     console.error(error);
