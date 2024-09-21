@@ -77,7 +77,7 @@ const fetchAllRules = async () => {
 const buildMessageText = (rules: Rule[]) => {
     const rulesText = rules.map(rule => `ルールID:${rule.id}, キーワード:${rule.keyword}, 除外キーワード:${rule.ignoreKeyword}`).join('\n');
 
-    return `\`${REPORT_TITLE}\`\n${rulesText}`;
+    return `${REPORT_TITLE}\n\n${rulesText}`;
 };
 
 try {
