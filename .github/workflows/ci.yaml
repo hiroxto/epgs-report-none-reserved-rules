@@ -11,17 +11,22 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
 
-      - name: Install dependencies
-        run: bun install
-
       - uses: actions/cache@v4
         name: Cache node_modules
         with:
           path: node_modules
-          key: ${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-${{ hashFiles('bun.lockb') }}
           restore-keys: |
             ${{ runner.os }}-
 
-      # TODO: lint などを導入する
+      - name: Install dependencies
+        run: bun install
+
       - name: Run build
         run: bun build main.ts >> /dev/null
+
+      - name: Run biome lint
+        run: bunx biome lint
+
+      - name: Run biome format
+        run: bunx biome format
