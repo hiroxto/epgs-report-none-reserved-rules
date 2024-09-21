@@ -1,16 +1,16 @@
 {
-  "name": "epgs-report-none-reserved-rules",
-  "module": "main.ts",
-  "type": "module",
-  "devDependencies": {
-    "@biomejs/biome": "1.9.2",
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@slack/web-api": "^7.0.1",
-    "dotenv": "^16.4.1"
-  }
+    "name": "epgs-report-none-reserved-rules",
+    "module": "main.ts",
+    "type": "module",
+    "devDependencies": {
+        "@biomejs/biome": "1.9.2",
+        "@types/bun": "latest"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@slack/web-api": "^7.0.1",
+        "dotenv": "^16.4.1"
+    }
 }

@@ -1,14 +1,14 @@
-import * as dotenv from 'dotenv'
-import { WebClient } from "@slack/web-api"
-import assert from 'assert'
+import * as dotenv from 'dotenv';
+import { WebClient } from '@slack/web-api';
+import assert from 'node:assert';
 
 interface EPGStationRulesResponse {
-    rules: EPGStationRuleResponse[]
-    total: number
+    rules: EPGStationRuleResponse[];
+    total: number;
 }
 
 interface EPGStationRuleResponse {
-    reserveOption: ReserveOption
+    reserveOption: ReserveOption;
     searchOption: SearchOption;
     id: number;
     reservesCnt: number;
@@ -39,15 +39,17 @@ const SLACK_CHANNEL_ID = Bun.env.SLACK_CHANNEL_ID;
 const SLACK_BOT_NAME = Bun.env.SLACK_BOT_NAME;
 const REPORT_TITLE = Bun.env.REPORT_TITLE;
 const DEFAULT_EMPTY_VALUE = Bun.env.DEFAULT_EMPTY_VALUE;
+
 // undefined の場合はエラーにする
 assert(
     typeof BASE_URL === 'string' &&
-    typeof SLACK_TOKEN === 'string' &&
-    typeof SLACK_CHANNEL_ID === 'string' &&
-    typeof SLACK_BOT_NAME === 'string' &&
-    typeof REPORT_TITLE === 'string' &&
-    typeof DEFAULT_EMPTY_VALUE === 'string'
+        typeof SLACK_TOKEN === 'string' &&
+        typeof SLACK_CHANNEL_ID === 'string' &&
+        typeof SLACK_BOT_NAME === 'string' &&
+        typeof REPORT_TITLE === 'string' &&
+        typeof DEFAULT_EMPTY_VALUE === 'string',
 );
+
 /**
  * 予約ルールを全件取得する
  */
@@ -57,7 +59,7 @@ const fetchAllRules = async () => {
     fetchURL.searchParams.set('limit', '1');
     fetchURL.searchParams.set('type', 'normal');
     fetchURL.searchParams.set('isHalfWidth', 'false');
-    const preFetchResponse: EPGStationRulesResponse = await fetch(fetchURL).then(res => res.json())
+    const preFetchResponse: EPGStationRulesResponse = await fetch(fetchURL).then(res => res.json());
 
     // 全件取得する
     fetchURL.searchParams.set('limit', String(preFetchResponse.total));
@@ -101,9 +103,8 @@ try {
     await slackClient.chat.postMessage({
         text: buildMessageText(noneReservedRules),
         channel: SLACK_CHANNEL_ID,
-        username : SLACK_BOT_NAME,
+        username: SLACK_BOT_NAME,
     });
-
 } catch (error) {
     console.error(error);
 }
