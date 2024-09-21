@@ -75,7 +75,7 @@ const fetchAllRules = async () => {
  * 投稿用のテキストをビルドする
  */
 const buildMessageText = (rules: Rule[]) => {
-    const rulesText = rules.map(rule => `ルールID:${rule.id}: キーワード:${rule.keyword}, 除外キーワード:${rule.ignoreKeyword}`).join('\n');
+    const rulesText = rules.map(rule => `ルールID:${rule.id}, キーワード:${rule.keyword}, 除外キーワード:${rule.ignoreKeyword}`).join('\n');
 
     return `\`${REPORT_TITLE}\`\n${rulesText}`;
 };
