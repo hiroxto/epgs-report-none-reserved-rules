@@ -39,6 +39,7 @@ const SLACK_CHANNEL_ID = Bun.env.SLACK_CHANNEL_ID;
 const SLACK_BOT_NAME = Bun.env.SLACK_BOT_NAME;
 const REPORT_TITLE = Bun.env.REPORT_TITLE;
 const DEFAULT_EMPTY_VALUE = Bun.env.DEFAULT_EMPTY_VALUE;
+const ATTACHMENT_COLOR = Bun.env.ATTACHMENT_COLOR;
 
 // undefined の場合はエラーにする
 assert(
@@ -47,7 +48,8 @@ assert(
         typeof SLACK_CHANNEL_ID === 'string' &&
         typeof SLACK_BOT_NAME === 'string' &&
         typeof REPORT_TITLE === 'string' &&
-        typeof DEFAULT_EMPTY_VALUE === 'string',
+        typeof DEFAULT_EMPTY_VALUE === 'string' &&
+        typeof ATTACHMENT_COLOR === 'string',
 );
 
 /**
@@ -75,15 +77,6 @@ const fetchAllRules = async () => {
     }));
 };
 
-/**
- * 投稿用のテキストをビルドする
- */
-const buildMessageText = (rules: Rule[]) => {
-    const rulesText = rules.map(rule => `ルールID:${rule.id}, キーワード:${rule.keyword}, 除外キーワード:${rule.ignoreKeyword}`).join('\n');
-
-    return `${REPORT_TITLE}\n\n${rulesText}`;
-};
-
 try {
     // ルールを全件取得する
     const rules = await fetchAllRules();
@@ -99,9 +92,26 @@ try {
 
     // 予約が 0 件のルールがある場合は Slack に通知する
     console.info(`予約のないルール件数: ${noneReservedRules.length}件`);
+    const rulesText = noneReservedRules.map(rule => `ルールID: ${rule.id}, キーワード: ${rule.keyword}, 除外キーワード: ${rule.ignoreKeyword}`).join('\n');
+
     const slackClient = new WebClient(SLACK_TOKEN);
     await slackClient.chat.postMessage({
-        text: buildMessageText(noneReservedRules),
+        text: REPORT_TITLE,
+        blocks: [],
+        attachments: [
+            {
+                color: ATTACHMENT_COLOR,
+                blocks: [
+                    {
+                        type: 'section',
+                        text: {
+                            type: 'plain_text',
+                            text: rulesText,
+                        },
+                    },
+                ],
+            },
+        ],
         channel: SLACK_CHANNEL_ID,
         username: SLACK_BOT_NAME,
     });
