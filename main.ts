@@ -97,19 +97,20 @@ try {
     const slackClient = new WebClient(SLACK_TOKEN);
     await slackClient.chat.postMessage({
         text: REPORT_TITLE,
-        blocks: [],
-        attachments: [
+        blocks: [
             {
-                color: ATTACHMENT_COLOR,
-                blocks: [
-                    {
-                        type: 'section',
-                        text: {
-                            type: 'plain_text',
-                            text: rulesText,
-                        },
-                    },
-                ],
+                type: 'header',
+                text: {
+                    type: 'plain_text',
+                    text: REPORT_TITLE,
+                },
+            },
+            {
+                type: 'section',
+                text: {
+                    type: 'plain_text',
+                    text: rulesText,
+                },
             },
         ],
         channel: SLACK_CHANNEL_ID,
