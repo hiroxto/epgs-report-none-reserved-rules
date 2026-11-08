@@ -3,7 +3,7 @@
     "module": "main.ts",
     "type": "module",
     "devDependencies": {
-        "@biomejs/biome": "1.9.2",
+        "@biomejs/biome": "1.9.4",
         "@types/bun": "latest"
     },
     "peerDependencies": {
