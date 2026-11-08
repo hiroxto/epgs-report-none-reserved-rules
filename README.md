@@ -5,8 +5,14 @@ EPGStation の 1 件も予約がない予約ルールをSlackに通知するス�
 
 ## 設定
 
-依存関係をインストール。
-Bun を使用する。
+[mise](https://mise.jdx.dev/) を使い、`mise.toml` で指定した Bun をインストールする。
+
+```bash
+mise trust
+mise install
+```
+
+依存関係をインストールする。
 
 ```bash
 bun install
