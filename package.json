@@ -4,10 +4,8 @@
     "type": "module",
     "devDependencies": {
         "@biomejs/biome": "2.6.7",
-        "@types/bun": "latest"
-    },
-    "peerDependencies": {
-        "typescript": "^5.0.0"
+        "@types/bun": "latest",
+        "typescript": "^7.0.2"
     },
     "dependencies": {
         "@slack/web-api": "^8.0.0",
