@@ -33,5 +33,10 @@
             "quoteStyle": "single",
             "arrowParentheses": "asNeeded"
         }
+    },
+    "yaml": {
+        "formatter": {
+            "indentWidth": 2
+        }
     }
 }
