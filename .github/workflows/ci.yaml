@@ -25,8 +25,5 @@ jobs:
       - name: Run build
         run: bun build main.ts >> /dev/null
 
-      - name: Run biome lint
-        run: bunx biome lint
-
-      - name: Run biome format
-        run: bunx biome format
+      - name: Run biome check
+        run: bunx biome check
