@@ -6,7 +6,7 @@
       "name": "epgs-report-none-reserved-rules",
       "dependencies": {
         "@slack/web-api": "^8.0.0",
-        "dotenv": "^16.4.1",
+        "dotenv": "^18.0.0",
       },
       "devDependencies": {
         "@biomejs/biome": "2.6.7",
@@ -56,7 +56,7 @@
 
     "bun-types": ["bun-types@1.0.25", "", { "dependencies": { "@types/node": "*", "@types/ws": "*", "undici-types": "^5.26.4" } }, "sha512-9lxeUR/OJsvlZH4GOWteiAdx7ikrSxCUX7Rr0JJux+DrR3LejouVLxIZnTeQ3UPAZovvSgKivWeHPJ2wlo7/Kg=="],
 
-    "dotenv": ["dotenv@16.4.1", "", {}, "sha512-CjA3y+Dr3FyFDOAMnxZEGtnW9KBR2M0JvvUtXNW+dYJL5ROWxP9DUHCwgFqpMk0OXCc0ljhaNTr2w/kutYIcHQ=="],
+    "dotenv": ["dotenv@18.0.10", "", { "bin": { "dotenv": "dist/cli.cjs" } }, "sha512-89FAA1xchzK2mxVWdr5F/0rldwiueXs6zJM86rO66EzekR1iBdiXRthyG+m5GvkJaFH3C2LESzamTkgndmLT2A=="],
 
     "eventemitter3": ["eventemitter3@5.0.1", "", {}, "sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA=="],
 
