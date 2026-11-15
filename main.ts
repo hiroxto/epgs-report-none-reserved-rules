@@ -61,11 +61,11 @@ const fetchAllRules = async () => {
     fetchURL.searchParams.set('limit', '1');
     fetchURL.searchParams.set('type', 'normal');
     fetchURL.searchParams.set('isHalfWidth', 'false');
-    const preFetchResponse: EPGStationRulesResponse = await fetch(fetchURL).then(res => res.json());
+    const preFetchResponse = await fetch(fetchURL).then(res => res.json() as Promise<EPGStationRulesResponse>);
 
     // 全件取得する
     fetchURL.searchParams.set('limit', String(preFetchResponse.total));
-    const rawRules: EPGStationRulesResponse = await fetch(fetchURL).then(res => res.json());
+    const rawRules = await fetch(fetchURL).then(res => res.json() as Promise<EPGStationRulesResponse>);
 
     // 扱いやすい形に変換する
     return rawRules.rules.map<Rule>(rawRule => ({

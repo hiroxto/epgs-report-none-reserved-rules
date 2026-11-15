@@ -25,5 +25,8 @@ jobs:
       - name: Run build
         run: bun build main.ts >> /dev/null
 
+      - name: Run type check
+        run: bunx tsc --noEmit
+
       - name: Run biome check
         run: bunx biome check
