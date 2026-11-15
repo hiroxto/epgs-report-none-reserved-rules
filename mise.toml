@@ -1,2 +1,21 @@
 [tools]
 bun = "1.4.4"
+
+[tasks.setup]
+description = "開発環境をセットアップする"
+run = [
+    { task = "setup:env" },
+    { task = "install" },
+]
+
+[tasks."setup:env"]
+description = ".env.exampleを.envにコピーする"
+run = "test -f .env || cp .env.example .env"
+
+[tasks.install]
+description = "依存関係をインストールする"
+run = "bun install --frozen-lockfile"
+
+[tasks.start]
+description = "スクリプトを実行する"
+run = "bun run main.ts"
