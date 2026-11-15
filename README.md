@@ -12,18 +12,19 @@ mise trust
 mise install
 ```
 
-依存関係をインストールする。
+mise のタスクで .env ファイルを作成し、依存関係をインストールする。
+.env ファイルは .env.example ファイルをコピーして作成する。既に .env ファイルがある場合はコピーしない。
 
 ```bash
-bun install
+mise run setup
 ```
 
-.env.example ファイルを参考に .env ファイルを作成する。
+.env ファイルの各項目を、利用する環境に合わせて書き換える。
 
 ## 実行方法
 
-Bun を使って実行する。
+mise のタスクを使って実行する。
 
 ```bash
-bun run main.ts
+mise run start
 ```
