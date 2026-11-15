@@ -1,6 +1,6 @@
-import * as dotenv from 'dotenv';
-import { WebClient } from '@slack/web-api';
 import assert from 'node:assert';
+import { WebClient } from '@slack/web-api';
+import * as dotenv from 'dotenv';
 
 interface EPGStationRulesResponse {
     rules: EPGStationRuleResponse[];
